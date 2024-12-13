@@ -3,14 +3,13 @@
  */
 package za.co.sindi.data.listener;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import za.co.sindi.data.entity.CreatedAuditable;
-import za.co.sindi.data.entity.CreatedTimestamp;
 import za.co.sindi.data.entity.LastModifiedAuditable;
 import za.co.sindi.data.entity.SoftDeleted;
 import za.co.sindi.data.entity.SoftDeletedAuditable;
@@ -100,7 +99,7 @@ public class AuditableEntityListener {
 		}
 		
 		if (!entity.isDeleted()) {
-			entity.setDeletedOn((Date)null);
+			entity.setDeletedOn((Instant)null);
 		}
 	}
 }

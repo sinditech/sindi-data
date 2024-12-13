@@ -25,8 +25,6 @@ public interface DataRepository<E> {
      * Other properties of the entity do not need to match.
      *
      * @param entity must not be {@literal null}.
-     * @throws OptimisticLockingFailureException if the entity is not found in the database for deletion
-     *         or has a version for optimistic locking that is inconsistent with the version in the database.
      * @throws NullPointerException when the entity is null
      */
     void delete(E entity);
@@ -78,17 +76,6 @@ public interface DataRepository<E> {
     /**
      * <p>Modifies an entity that already exists in the database.</p>
      *
-     * <p>For an update to be made, a matching entity with the same unique identifier
-     * must be present in the database. In databases that use an append model to write data or
-     * follow the BASE model, this method behaves the same as the {@link #insert} method.</p>
-     *
-     * <p>If the entity is versioned (for example, with {@code jakarta.persistence.Version} or by
-     * another convention from the entity model such as having an attribute named {@code version}),
-     * then the version must also match. The version is automatically incremented when making
-     * the update.</p>
-     *
-     * <p>Non-matching entities are ignored and do not cause an error to be raised.</p>
-     *
      * @param entity the entity to update. Must not be {@code null}.
      * @return true if a matching entity was found in the database to update, otherwise false.
      * @throws NullPointerException if the entity is null.
@@ -97,17 +84,6 @@ public interface DataRepository<E> {
     
     /**
      * <p>Modifies entities that already exist in the database.</p>
-     *
-     * <p>For an update to be made to an entity, a matching entity with the same unique identifier
-     * must be present in the database. In databases that use an append model to write data or
-     * follow the BASE model, this method behaves the same as the {@link #insertAll} method.</p>
-     *
-     * <p>If the entity is versioned (for example, with {@code jakarta.persistence.Version} or by
-     * another convention from the entity model such as having an attribute named {@code version}),
-     * then the version must also match. The version is automatically incremented when making
-     * the update.</p>
-     *
-     * <p>Non-matching entities are ignored and do not cause an error to be raised.</p>
      *
      * @param entities entities to update.
      * @return the number of matching entities that were found in the database to update.

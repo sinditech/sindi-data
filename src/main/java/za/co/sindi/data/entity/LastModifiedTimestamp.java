@@ -3,10 +3,10 @@
  */
 package za.co.sindi.data.entity;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import za.co.sindi.commons.utils.Dates;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 /**
  * @author Buhake Sindi
@@ -16,19 +16,18 @@ import za.co.sindi.commons.utils.Dates;
 public interface LastModifiedTimestamp extends CreatedTimestamp {
 	
 	default LocalDateTime getLastModifiedOnAsLocalDateTime() {
-		return Dates.toLocalDateTime(getLastModifiedOn());
+		return LocalDateTime.ofInstant(getLastModifiedOn(), ZoneId.systemDefault());
 	}
 	
-//	default LocalDateTime getLastModifiedOnAsLocalDateTime(final ZoneOffset zoneOffset) {
-//		Instant instant = getLastModifiedOn().toInstant();
-//		return instant == null ? null : LocalDateTime.ofInstant(instant, zoneOffset);
-//	}
+	public Instant getLastModifiedOn();
 	
-	public Date getLastModifiedOn();
-	
-	public void setLastModifiedOn(final Date lastModifiedOn);
+	public void setLastModifiedOn(final Instant lastModifiedOn);
 	
 	default void setLastModifiedOn(final LocalDateTime lastModifiedOnDateTime) {
-		setLastModifiedOn(Dates.toDate(lastModifiedOnDateTime));
+		setLastModifiedOn(lastModifiedOnDateTime, ZoneOffset.UTC);
+	}
+	
+	default void setLastModifiedOn(final LocalDateTime lastModifiedOnDateTime, final ZoneOffset zoneOffset) {
+		setLastModifiedOn(lastModifiedOnDateTime.toInstant(zoneOffset));
 	}
 }

@@ -3,10 +3,10 @@
  */
 package za.co.sindi.data.entity;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import za.co.sindi.commons.utils.Dates;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 /**
  * @author Buhake Sindi
@@ -16,19 +16,18 @@ import za.co.sindi.commons.utils.Dates;
 public interface SoftDeletedTimestamp extends LastModifiedTimestamp, SoftDeleted {
 	
 	default LocalDateTime getDeletedOnAsLocalDateTime() {
-		return Dates.toLocalDateTime(getDeletedOn());
+		return LocalDateTime.ofInstant(getDeletedOn(), ZoneId.systemDefault());
 	}
 	
-//	default LocalDateTime getDeletedOnAsLocalDateTime(final ZoneOffset zoneOffset) {
-//		Instant instant = getDeletedOn().toInstant();
-//		return instant == null ? null : LocalDateTime.ofInstant(instant, zoneOffset);
-//	}
+	public Instant getDeletedOn();
 	
-	public Date getDeletedOn();
-	
-	public void setDeletedOn(final Date deletedOn);
+	public void setDeletedOn(final Instant deletedOn);
 	
 	default void setDeletedOn(final LocalDateTime deletedOnDateTime) {
-		setDeletedOn(Dates.toDate(deletedOnDateTime));
+		setDeletedOn(deletedOnDateTime, ZoneOffset.UTC);
+	}
+	
+	default void setDeletedOn(final LocalDateTime deletedOnDateTime, final ZoneOffset zoneOffset) {
+		setDeletedOn(deletedOnDateTime.toInstant(zoneOffset));
 	}
 }
