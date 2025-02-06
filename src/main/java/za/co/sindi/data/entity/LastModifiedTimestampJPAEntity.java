@@ -4,7 +4,7 @@
 package za.co.sindi.data.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PreUpdate;
@@ -23,7 +23,7 @@ public abstract class LastModifiedTimestampJPAEntity<PK extends Comparable<PK> &
 	@PreUpdate
 	protected void onPreUpdate() {
 		if (setLastModifiedTimestampExplicitly && getLastModifiedOn() == null) {
-			setLastModifiedOn(LocalDateTime.now());
+			setLastModifiedOn(Instant.now());
 		}
 	}
 

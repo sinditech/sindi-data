@@ -4,7 +4,6 @@
 package za.co.sindi.data.listener;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.PrePersist;
@@ -95,7 +94,7 @@ public class AuditableEntityListener {
 	private void onPreUpdateTemporal(SoftDeletedTimestamp entity) {
 		if (entity.isDeleted() && entity.getDeletedOn() == null) {
 //			throw new PersistenceException("Error found on PreUpdate. No deletedOn has been specified (in entity class " + entity.getClass().getName() + ").");
-			entity.setDeletedOn(LocalDateTime.now());
+			entity.setDeletedOn(Instant.now());
 		}
 		
 		if (!entity.isDeleted()) {

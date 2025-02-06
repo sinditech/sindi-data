@@ -4,7 +4,7 @@
 package za.co.sindi.data.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
@@ -23,7 +23,7 @@ public abstract class CreatedTimestampJPAEntity<PK extends Comparable<PK> & Seri
 	@PrePersist
 	protected void onPrePersist() {
 		if (setCreatedOnTimestampExplicitly && getCreatedOn() == null) {
-			setCreatedOn(LocalDateTime.now());
+			setCreatedOn(Instant.now());
 		}
 	}
 

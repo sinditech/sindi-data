@@ -4,9 +4,6 @@
 package za.co.sindi.data.entity;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 /**
  * @author Buhake Sindi
@@ -15,19 +12,7 @@ import java.time.ZoneOffset;
  */
 public interface LastModifiedTimestamp extends CreatedTimestamp {
 	
-	default LocalDateTime getLastModifiedOnAsLocalDateTime() {
-		return LocalDateTime.ofInstant(getLastModifiedOn(), ZoneId.systemDefault());
-	}
-	
 	public Instant getLastModifiedOn();
 	
 	public void setLastModifiedOn(final Instant lastModifiedOn);
-	
-	default void setLastModifiedOn(final LocalDateTime lastModifiedOnDateTime) {
-		setLastModifiedOn(lastModifiedOnDateTime, ZoneOffset.UTC);
-	}
-	
-	default void setLastModifiedOn(final LocalDateTime lastModifiedOnDateTime, final ZoneOffset zoneOffset) {
-		setLastModifiedOn(lastModifiedOnDateTime.toInstant(zoneOffset));
-	}
 }
