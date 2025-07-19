@@ -32,17 +32,17 @@ public abstract class JPAEntity<PK extends Comparable<PK> & Serializable> extend
 		PK id = getId();
 		if (id == null) return true;
 		
+		if (id instanceof CharSequence s) return s.isEmpty();
+		
 		Class<?> idClass = id.getClass();
 		if (!idClass.isPrimitive()) {
 			idClass = Classes.getPrimitiveTypeFor(idClass);
 		}
 		
-		if (idClass != null) {
+		if (idClass != null && idClass.isPrimitive()) {
 			return id.equals(Defaults.getDefaultValue(idClass));
 		}
-		
-		if (id instanceof String s) return s.isEmpty();
-		
+				
 		//It is not null
 		return false;
 	}
